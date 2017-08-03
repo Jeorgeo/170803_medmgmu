@@ -1491,3 +1491,9 @@ footer .copyright p {
 .accordions.border-bottom .accordions-head {
   border-bottom: none;
 }
+
+
+/*отключил кнопку формы*/
+header button {
+  display: none;
+}
