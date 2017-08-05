@@ -413,7 +413,7 @@
 								<input id="form1_email" name="form1_email" placeholder="E-mail:" class="form-control input-md reg_email" type="text">
 							</div>
 							<div class="col-md-12">
-								<textarea style="height: 70px;" class="form-control" id="form1_message" placeholder="Коротко опешите причину обращения:" name="form1_message"></textarea>
+								<textarea style="height: 70px;" class="form-control" id="form1_message" placeholder="Коротко опишите причину обращения:" name="form1_message"></textarea>
 							</div>
                             <div class="col-md-12">
                                 <div class="compliance">
@@ -504,9 +504,9 @@
 								'subj': subj
 							};
 
-							(jQuery).post('https://medmgmu.ru/ajax/contact_me.php', post_data, function(response){
+							(jQuery).post('<?php echo get_stylesheet_directory_uri(); ?>/ajax/contact_me.php', post_data, function(response){
 								if (response.type == 'error') {
-									alert( post_data.subj, response.type);
+									alert( 'При отправлении заявки произошла ошибка!' );
 								}
 								else {
 									alert( 'Спасибо! Наш специалист свяжется с Вами в ближайшее время.' );
@@ -628,9 +628,9 @@
 								'subj': subj
 							};
 
-							(jQuery).post('https://medmgmu.ru/ajax/contact_me.php', post_data, function(response){
+							(jQuery).post('<?php echo get_stylesheet_directory_uri(); ?>/ajax/contact_me.php', post_data, function(response){
 								if (response.type == 'error') {
-									alert( post_data.subj, response.type);
+									alert( 'При отправлении заявки произошла ошибка!' );
 								}
 								else {
 									alert( 'Спасибо! Наш специалист свяжется с Вами в ближайшее время.' );
