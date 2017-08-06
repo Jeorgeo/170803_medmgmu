@@ -446,6 +446,7 @@
 						</fieldset>
 					</form>
 					<script>
+					$(document).ready(function(){
                         compliancecheck2 = false;
 						function validateForm1(){
                             if (!compliancecheck2) {
@@ -454,34 +455,34 @@
 
 							var validate = true;
 
-							var service = (jQuery)('#form1_service').val();
-							var metro = (jQuery)('#form1_metro').val();
-							var time = (jQuery)('#form1_time').val();
-							var name = (jQuery)('#form1_name').val();
-							var phone = (jQuery)('#form1_phone').val();
-							var email = (jQuery)('#form1_email').val();
-							var message = (jQuery)('#form1_message').val();
-							var date = (jQuery)('#form1_date').val();
+							var service = $('#form1_service').val();
+							var metro = $('#form1_metro').val();
+							var time = $('#form1_time').val();
+							var name = $('#form1_name').val();
+							var phone = $('#form1_phone').val();
+							var email = $('#form1_email').val();
+							var message = $('#form1_message').val();
+							var date = $('#form1_date').val();
 
-							(jQuery)('#form1_metro').css('border', "1px solid #ccc");
-							(jQuery)('#form1_phone').css('border-color', "#d4d2d2");
-							(jQuery)('#form1_email').css('border-color', "#d4d2d2");
+							$('#form1_metro').css('border', "1px solid #ccc");
+							$('#form1_phone').css('border-color', "#d4d2d2");
+							$('#form1_email').css('border-color', "#d4d2d2");
 
 							if( metro == 0 ){
-								(jQuery)('#form1_metro').css('border', "1px solid #b62a3d");
+								$('#form1_metro').css('border', "1px solid #b62a3d");
 								validate = false;
 							}
 							if( phone.length < 6 && email.length < 6 ){
-								(jQuery)('#form1_phone').css('border-color', "#b62a3d");
-								(jQuery)('#form1_email').css('border-color', "#b62a3d");
+								$('#form1_phone').css('border-color', "#b62a3d");
+								$('#form1_email').css('border-color', "#b62a3d");
 								validate = false;
 							}
 							if( email.length > 0 && email.length < 6 ){
-								(jQuery)('#form1_email').css('border-color', "#b62a3d");
+								$('#form1_email').css('border-color', "#b62a3d");
 								validate = false;
 							}
 							if( phone.length > 0 && phone.length < 6 ){
-								(jQuery)('#form1_phone').css('border-color', "#b62a3d");
+								$('#form1_phone').css('border-color', "#b62a3d");
 								validate = false;
 							}
 							if( !validate ) {
@@ -504,8 +505,12 @@
 								'subj': subj
 							};
 
-							(jQuery).post('https://medmgmu.ru/ajax/contact_me.php', post_data, function(response){
-								if (response.type == 'error') {
+							$.post( "https://medmgmu.ru/ajax/contact_me.php", post_data , function( data ) {
+  						alert('good news');
+							}, "json");
+
+							/*$.post('ajax/contact_me.php', post_data, function(response){
+								if (response.type === 'error') {
 									alert( post_data.subj, response.type);
 								}
 								else {
@@ -522,7 +527,8 @@
 							}, 'json');
 
 							return false;
-						}
+						}*/
+					});
 					</script>
 					<form id="form_reg2" class="form-horizontal form_reg" style="margin-top: 60px;display:none;">
 						<fieldset>
@@ -567,7 +573,7 @@
                                     </a>
                                 </div>
                                 <script>
-                                  	function compliance_check() {
+                                    function compliance_check() {
                                         obj = document.getElementById('compliance_check');
                                         if(obj.classList.contains('selected')) {
                                             $('#compliance_check').removeClass('selected');
@@ -591,7 +597,7 @@
 					<script>
                         compliancecheck = false;
 						function validateForm2(){
-                           if (!compliancecheck) {
+                            if (!compliancecheck) {
                                 return false;
                             }
 
@@ -627,10 +633,44 @@
 								'date': date,
 								'subj': subj
 							};
+/*
+							$("#form_reg2").submit(function(event) {
+								event.preventDefault(); //устанавливаем событие отправки для формы с id=form
+            var form_data1 = $(this).serialize(); //собераем все данные из формы
+            $.ajax({
+            type: "POST", //Метод отправки
+            url: "/ajax/contact_me.php", //путь до php фаила отправителя
+            data: form_data1,
+            success: function() {
+                   //код в этом блоке выполняется при успешной отправке сообщения
+                   alert("Ваше сообщение отпрвлено!");
+								 }
+            });
 
-							(jQuery).post('<?php echo get_stylesheet_directory_uri(); ?>/ajax/contact_me.php', post_data, function( data ){
-								if ( data.type == 'error' ) {
-									alert( 'При отправлении заявки произошла ошибка!' );
+						return false;
+    });*/
+		$(".form_reg2").submit(function(event) {
+		        event.preventDefault();
+		        var name = $("#form2_name").val();
+		        var tel = $("#form2_phone").val();
+		        $.ajax({
+		            url: "/wp-admin/admin-ajax.php",
+		            method: 'post',
+		            data: {
+		                action: 'ajax_order',
+		                name: name,
+		                tel: tel
+
+		            },
+		            success: function (response) {
+		                console.info('success')
+		                $('#submit-ajax').html(response);
+		            }
+		        });
+		    });
+							/*$.post('ajax/contact_me.php', post_data, function(response){
+								if (response.type === 'error') {
+									alert( post_data.subj, response.type);
 								}
 								else {
 									alert( 'Спасибо! Наш специалист свяжется с Вами в ближайшее время.' );
@@ -640,10 +680,10 @@
 										'event': 'formSubmit',
 										'EventCategory': 'form',
 										'EventAction': 'submit',
-										'EventLabel': 'form-2'
+										'EventLabel': 'form-1'
 									});
 								}
-							}, 'json');
+							}, 'json');*/
 
 							return false;
 						}
